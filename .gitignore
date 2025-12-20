@@ -1,0 +1,4 @@
+# file da non caricare su github
+*.json
+.env
+*.txt
