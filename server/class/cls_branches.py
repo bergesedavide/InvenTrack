@@ -1,4 +1,4 @@
-
+from database.db_operations import insert_branch
 
 class Branches:
     def __init__(self, name):
@@ -8,7 +8,8 @@ class Branches:
         print(self.name)
 
     def add_database(self):
-        pass
+        branc = None
+        insert_branch(branc)
 
 
 azienda = Branches("Caporale")

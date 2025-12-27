@@ -1,56 +1,50 @@
-import json
-import os
+from server.database.db_conn import get_supabase_client
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FILE_PATH = os.path.join(BASE_DIR, "date.json")
+db = get_supabase_client()
 
-def read_calendar():
-    with open(FILE_PATH, "r", encoding="utf-8") as file:
-        return json.load(file)
-    
-def write_calendar(data: dict):
-    with open(FILE_PATH, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4)
-
-# GET
+# Get
 def get_day() -> int:
-    return int(read_calendar()["day"])
+    response = db.table("calendar").select("day").execute()
+    day = response.data[0]['day']
+    day = int(day)
+    return day
 
 def get_month() -> int:
-    return int(read_calendar()["month"])
+    response = db.table("calendar").select("month").execute()
+    month = response.data[0]['month']
+    month = int(month)
+    return month
 
 def get_year() -> int:
-    return int(read_calendar()["year"])
+    response = db.table("calendar").select("year").execute()
+    year = response.data[0]['year']
+    year = int(year)
+    return year
 
 def get_leap_year() -> int:
-    return int(read_calendar()["next_leap_year"])
+    response = db.table("calendar").select("next_leap_year").execute()
+    next_leap_year = response.data[0]['next_leap_year']
+    next_leap_year = int(next_leap_year)
+    return next_leap_year
 
 def get_week_day() -> int:
-    return int(read_calendar()["week_day"])
+    response = db.table("calendar").select("week_day").execute()
+    week_day = response.data[0]['week_day']
+    week_day = int(week_day)
+    return week_day
 
+# Update
+def set_day(day: int):
+    db.table("calendar").update({"day": day}).eq("id", 1).execute()
 
-# PUT
-def set_day(day: str) -> str:
-    date = read_calendar()
-    date["day"] = day
-    write_calendar(date)
+def set_month(month: int):
+    db.table("calendar").update({"month": month}).eq("id", 1).execute()
 
-def set_month(month: str) -> str:
-    date = read_calendar()
-    date["month"] = month
-    write_calendar(date)
+def set_year(year: int):
+    db.table("calendar").update({"year": year}).eq("id", 1).execute()
 
-def set_year(year: str) -> str:
-    date = read_calendar()
-    date["year"] = year
-    write_calendar(date)
+def set_leap_year(leap_year: int):
+    db.table("calendar").update({"next_leap_year": leap_year}).eq("id", 1).execute()
 
-def set_leap_year(leap_year: str) -> str:
-    date = read_calendar()
-    date["next_leap_year"] = leap_year
-    write_calendar(date)
-
-def set_week_day(week_day: str) -> str:
-    date = read_calendar()
-    date["week_day"] = week_day
-    write_calendar(date)
+def set_week_day(week_day: int):
+    db.table("calendar").update({"week_day": week_day}).eq("id", 1).execute()

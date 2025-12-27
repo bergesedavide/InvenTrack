@@ -1,4 +1,4 @@
-from database.db_date import get_day, get_month, get_year, get_leap_year, get_week_day, set_day, set_month, set_year, set_leap_year, set_week_day
+from server.database.db_date import get_day, get_month, get_year, get_leap_year, get_week_day, set_day, set_month, set_year, set_leap_year, set_week_day
 
 # Variabili globali
 LONG_MONTH = ["GENNAIO", "MARZO", "MAGGIO", "LUGLIO", "AGOSTO", "OTTOBRE", "DICEMBRE"]
@@ -35,7 +35,7 @@ WEEK_DAYS = {
 }
 
 # Creazione funzioni
-def get_calendar() -> str:
+def get_calendar():
     day = get_day()
     month = get_month()
     year = get_year()
@@ -91,6 +91,12 @@ def add_day() -> str:
     elif get_week_day() == 7:
         set_week_day("1")
 
+def change_style_calendar(calendar):
+    day, month, year = calendar.split("-")
+    calendar = f"{year}-{month}-{day}"
+
+    return calendar
+
 """
 for i in range (100):
     add_day()
@@ -98,6 +104,7 @@ for i in range (100):
     print(data_corrente)
 """
 
+"""
 add_day()
 data_corrente = get_calendar()
 print(data_corrente["date"])
@@ -105,3 +112,4 @@ if data_corrente["shipping"]:
     print("I pacchetti possono essere consegnati")
 else:
     print("I pacchetti non possono essere consegnati")
+"""
