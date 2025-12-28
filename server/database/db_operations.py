@@ -1,4 +1,4 @@
-from db_conn import get_supabase_client
+from server.database.db_conn import get_supabase_client
 
 db = get_supabase_client()
 

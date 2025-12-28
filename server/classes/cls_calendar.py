@@ -1,4 +1,7 @@
-from server.database.db_date import get_day, get_month, get_year, get_leap_year, get_week_day, set_day, set_month, set_year, set_leap_year, set_week_day
+from server.database.db_date import (get_day, get_month, get_year, get_leap_year, get_week_day, get_ship,
+                                     set_day, set_month, set_year, set_leap_year, set_week_day, set_ship)
+from server.classes.cls_logger import Logger
+
 import threading, time
 
 class Calendar:
@@ -36,11 +39,14 @@ class Calendar:
             7: "DOMENICA"
         }
 
-    def create_calendar(self):
+        self.logger = Logger("calendar")
+
+    def _update_calendar(self):
         day = get_day()
         month = get_month()
         year = get_year()
         week_day = get_week_day()
+        ship = get_ship()
 
         month_string = self.months[month]
         week_day_string = self.week_days[week_day]
@@ -62,7 +68,7 @@ class Calendar:
         # --------------------
         # SHIPPING
         # --------------------
-        ship = week_day_string in self.working_day
+        new_ship = week_day_string in self.working_day
 
         # --------------------
         # AVANZAMENTO DATA
@@ -86,6 +92,9 @@ class Calendar:
 
         if new_year != year:
             set_year(new_year)
+        
+        if new_ship != ship:
+            set_ship(new_ship)
 
         # --------------------
         # ANNO BISESTILE
@@ -98,7 +107,7 @@ class Calendar:
             "day": new_day,
             "month": new_month,
             "year": new_year,
-            "shipping": ship
+            "shipping": new_ship
         }
     
     # --------------------
@@ -111,17 +120,17 @@ class Calendar:
             return
 
         self._running = True
-        self.last_calendar = None
         interval_seconds = interval_minutes * 60
 
         def _advance():
             if not self._running:
                 return
 
+            # TODO: sostituire tutti i print con chiamati alla classe Logger
             print(f"[CALENDAR] Tick alle {time.strftime('%H:%M:%S')}")
 
             self.add_day()
-            calendar = self.create_calendar()
+            calendar = self._update_calendar()
 
             print(
                 f"[CALENDAR] Nuova data → "
@@ -153,7 +162,6 @@ class Calendar:
     # --------------------
     # FUNZIONI DI RESTITUZIONE DATE
     # --------------------
-    
     def add_day(self):
         set_day(get_day() + 1)
 
@@ -166,22 +174,21 @@ class Calendar:
             return calendar
         
         day, month, year = parts
-        return f"{year}-{month}-{day}"
+        return f"{year:04}-{month:02}-{day:02}"
     
     def get_date(self) -> str:
-        calendar = self.create_calendar()
-        return f"{calendar['day']}-{calendar['month']}-{calendar['year']}"
+        day = get_day()
+        month = get_month()
+        year = get_year()
+        return f"{day:02}-{month:02}-{year:04}"
         
     def get_full_date(self) -> str:
-        calendar = self.create_calendar()
-        return f"{calendar['week_day']} {calendar['day']}-{calendar['month']}-{calendar['year']}"
+        day = get_day()
+        month = get_month()
+        year = get_year()
+        week_day = self.week_days[get_week_day()]
+        return f"{week_day} {day:02}-{month:02}-{year:04}"
     
     def can_ship(self) -> str:
-        calendar = self.create_calendar()
-        return calendar['shipping']
-
-# try
-calendario = Calendar()
-calendario.start_auto_advance(1)
-time.sleep(300)
-calendario.stop_auto_advance()
+        ship = get_ship()
+        return ship

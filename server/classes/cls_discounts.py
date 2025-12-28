@@ -1,7 +1,7 @@
 # Variabili globali
 # gestire gli eventi tramite database per scontistica
-from database.db_operations import insert_discount
-from calendar_opt import get_calendar, change_style_calendar
+from server.database.db_operations import insert_discount
+from server.classes.cls_calendar import Calendar
 
 class Discount:
     def __init__(self, name, discount, start, end, categories):
@@ -11,8 +11,9 @@ class Discount:
         self.end = end
         self.categories = categories
 
-        calendar = get_calendar()["date"].replace(" - ", "-").split(" ")[1]
-        calendar = change_style_calendar(calendar)
+        calendar = Calendar()
+        calendar = calendar.get_date()
+        calendar = calendar.change_style_calendar(calendar)
 
         date_cod, date_message = self._check_dates(calendar)
 

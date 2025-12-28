@@ -1,4 +1,4 @@
-from database.db_operations import insert_branch
+from server.database.db_operations import insert_branch
 
 class Branches:
     def __init__(self, name):

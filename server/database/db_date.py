@@ -33,6 +33,12 @@ def get_week_day() -> int:
     week_day = int(week_day)
     return week_day
 
+def get_ship() -> bool:
+    response = db.table("calendar").select("shipping").execute()
+    ship = response.data[0]['shipping']
+    ship = int(ship)
+    return ship
+
 # Update
 def set_day(day: int):
     db.table("calendar").update({"day": day}).eq("id", 1).execute()
@@ -48,3 +54,6 @@ def set_leap_year(leap_year: int):
 
 def set_week_day(week_day: int):
     db.table("calendar").update({"week_day": week_day}).eq("id", 1).execute()
+
+def set_ship(ship: bool):
+    db.table("calendar").update({"shipping": ship}).eq("id", 1).execute()
