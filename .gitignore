@@ -1,7 +1,5 @@
 # file da non caricare su github
-*.json
 .env
-
 test.py
 
 # file di testo

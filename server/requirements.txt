@@ -1,2 +1,5 @@
 python-dotenv
 supabase
+flask
+flask-cors
+waitress
