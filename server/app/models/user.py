@@ -2,7 +2,8 @@
 
 class User:
 
-    def __init__(self, username, email, pwd):
-        self.username = username
+    def __init__(self, email, password, role):
         self.email = email
-        self.password = pwd
+        self.username = email.split("@")[0]
+        self.password = password
+        self.role = role

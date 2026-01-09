@@ -23,6 +23,9 @@ class LogFile(Enum):
 class UserRoles(Enum):
     ADMIN = 1
 
+class AiModel(Enum):
+    TRASPORTI = "AI_MODEL_TRASPORTI"
+
 # ----------------------------
 # FUNZIONI
 # ----------------------------

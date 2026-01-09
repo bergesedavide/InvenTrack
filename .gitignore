@@ -1,6 +1,8 @@
 # file da non caricare su github
 .env
+.venv
 test.py
+__pycache__
 
 # file di testo
 *.txt

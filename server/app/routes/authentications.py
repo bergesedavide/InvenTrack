@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify
+from app.utils.utility_generator import generate_token
 
 auth_bp = Blueprint("auth", __name__)
 
-@auth_bp.route("/login", methods=["POST"])
+@auth_bp.route("/login", methods=["GET", "POST"])
 def handle_login():
     data = request.get_json()
 
@@ -13,10 +14,9 @@ def handle_login():
     password = data.get("password")
 
     #auth = check_login(email, password)
-    #token = generate_token(email)
+    token = generate_token()
 
-    auth = False
-    token = "1234"
+    auth = True
 
     if auth:
         return jsonify({

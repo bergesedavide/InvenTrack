@@ -5,4 +5,9 @@ class UserRepository:
         pass
 
     def load(self):
+        # Scaricare dal database email e password
+        
+        pass
+
+    def check_login(self, email, pwd):
         pass

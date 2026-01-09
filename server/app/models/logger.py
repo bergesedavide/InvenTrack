@@ -8,7 +8,7 @@ class Logger():
     def __init__(self, filename: str):
         os.makedirs(self.FOLDER, exist_ok=True)
 
-        self.filename = filename + ".log"
+        self.filename = filename
         self.filepath = os.path.join(self.FOLDER, self.filename)
 
         if not Path(self.filepath).exists():

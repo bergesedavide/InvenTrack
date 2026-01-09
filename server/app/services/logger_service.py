@@ -13,17 +13,37 @@ class LoggerService():
         if level is None:
             level = LogLevel.INFO
         
-        print(f"{level.value} [{level.name}] {message}{self.RESET_COLOR}")
+        print(f"{level.value} [{level.name}]{self.RESET_COLOR} {message}")
         self.repo.write_log(filename, level.name, message)
 
-    def debug(self, filename: str, message: str):
-        self.log(filename, message, LogLevel.DEBUG)
+    def log(self, filename: str, message: str, date, level: LogLevel = None):
+        self.logger = Logger(filename)
+        if level is None:
+            level = LogLevel.INFO
+        
+        print(f"{level.value} [{level.name} {date}]{self.RESET_COLOR} {message}")
+        self.repo.write_log(filename, level.name, message)
 
-    def info(self, filename: str, message: str):
-        self.log(filename, message, LogLevel.INFO)
+    def debug(self, filename: str, message: str, date = None):
+        if date:
+            self.log(filename, message, date, LogLevel.DEBUG)
+        else: 
+            self.log(filename, message, LogLevel.DEBUG)
 
-    def warning(self, filename: str, message: str):
-        self.log(filename, message, LogLevel.WARNING)
+    def info(self, filename: str, message: str, date = None):
+        if date:
+            self.log(filename, message, date, LogLevel.DEBUG)
+        else: 
+            self.log(filename, message, LogLevel.DEBUG)
 
-    def error(self, filename: str, message: str):
-        self.log(filename, message, LogLevel.ERROR)
+    def warning(self, filename: str, message: str, date = None):
+        if date:
+            self.log(filename, message, date, LogLevel.DEBUG)
+        else: 
+            self.log(filename, message, LogLevel.DEBUG)
+
+    def error(self, filename: str, message: str, date = None):
+        if date:
+            self.log(filename, message, date, LogLevel.DEBUG)
+        else: 
+            self.log(filename, message, LogLevel.DEBUG)

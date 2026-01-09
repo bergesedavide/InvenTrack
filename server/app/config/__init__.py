@@ -1,1 +1,1 @@
-from app.config.settings import LogLevel, directory_log, LogFile
+from app.config.settings import LogLevel, directory_log, LogFile, AiModel
