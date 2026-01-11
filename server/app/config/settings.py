@@ -8,6 +8,13 @@ init()
 # CLASSI
 # ----------------------------
 
+class DataTypes(Enum):
+    STRING = str
+    INTEGER = int
+    FLOAT = float
+    BOOLEAN = bool
+
+
 class LogLevel(Enum):
     DEBUG = Fore.GREEN         # verde
     INFO = Fore.LIGHTBLUE_EX   # azzurro
