@@ -14,8 +14,11 @@ class LoggerRepository():
 
         return {"message": self.file}, 200
 
-    def write_log(self, filename, loglevel, message):
+    def write_log(self, filename, loglevel, message, date = None):
         self.filepath = self.FOLDER + "\\" + filename
 
         with open(self.filepath, "a") as f:
-            f.write(f"[{loglevel}] {message}\n")
+            if not date:
+                f.write(f"[{loglevel}] {message}\n")
+            else:
+                f.write(f"[{loglevel} | {date}] {message}\n")

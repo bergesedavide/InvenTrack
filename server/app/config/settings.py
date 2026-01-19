@@ -14,7 +14,6 @@ class DataTypes(Enum):
     FLOAT = float
     BOOLEAN = bool
 
-
 class LogLevel(Enum):
     DEBUG = Fore.GREEN         # verde
     INFO = Fore.LIGHTBLUE_EX   # azzurro
@@ -31,7 +30,8 @@ class UserRoles(Enum):
     ADMIN = 1
 
 class AiModel(Enum):
-    TRASPORTI = "AI_MODEL_TRASPORTI"
+    DISTANCE_CALC = "AI_MODEL_DISTANCE_CALC"
+    CHATBOT = "AI_MODEL_CHATBOT"
 
 # ----------------------------
 # FUNZIONI

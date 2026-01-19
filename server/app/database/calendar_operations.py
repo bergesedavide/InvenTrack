@@ -1,53 +1,47 @@
 from app.database.database_connection import get_supabase_client
+from app.utils.data_types_creation import DataManipulation
+from enum import Enum
 
 class CalendarOperation:
     def __init__(self):
         self.db = get_supabase_client()
+        self.dataManipulator = DataManipulation()
+        
+    class DatabaseColName(Enum):
+        ID = "id"
+        DAY = "day"
+        MONTH = "month"
+        YEAR = "year"
+        WEEK_DAY = "week_day"
+        SHIP = "shipping"
 
     # Get
-    def get_day(self) -> int:
-        response = self.db.table("calendar").select("day").execute()
-        day = response.data[0]['day']
-        day = int(day)
-        return day
+    def get_date(self, col: DatabaseColName = None):
+        response = self.db.table("calendar").select("*").execute()
 
-    def get_month(self) -> int:
-        response = self.db.table("calendar").select("month").execute()
-        month = response.data[0]['month']
-        month = int(month)
-        return month
-
-    def get_year(self) -> int:
-        response = self.db.table("calendar").select("year").execute()
-        year = response.data[0]['year']
-        year = int(year)
-        return year
-
-    def get_week_day(self) -> int:
-        response = self.db.table("calendar").select("week_day").execute()
-        week_day = response.data[0]['week_day']
-        week_day = int(week_day)
-        return week_day
-
-    def get_ship(self) -> bool:
-        response = self.db.table("calendar").select("shipping").execute()
-        ship = response.data[0]['shipping']
-        ship = int(ship)
-        return ship
+        if col == self.DatabaseColName.DAY:
+            return int(response.data[0][self.DatabaseColName.DAY.value])
+        
+        if col == self.DatabaseColName.MONTH:
+            return int(response.data[0][self.DatabaseColName.MONTH.value])
+        
+        if col == self.DatabaseColName.YEAR:
+            return int(response.data[0][self.DatabaseColName.YEAR.value])
+        
+        if col == self.DatabaseColName.WEEK_DAY:
+            return int(response.data[0][self.DatabaseColName.WEEK_DAY.value])
+        
+        if col == self.DatabaseColName.SHIP.value:
+            return bool(response.data[0][self.DatabaseColName.SHIP.value])
+        
+        if not col:
+            return response.data[0]
 
     # Update
-    def set_day(self, day: int):
-        self.db.table("calendar").update({"day": day}).eq("id", 1).execute()
+    def set_date(self, day: int, month: int, year: int, week_day: int, ship: bool):
+        col = [self.DatabaseColName.DAY.value, self.DatabaseColName.MONTH.value, self.DatabaseColName.YEAR.value, self.DatabaseColName.WEEK_DAY.value, self.DatabaseColName.SHIP.value]
+        values = [day, month, year, week_day, ship]
 
-    def set_month(self, month: int):
-        self.db.table("calendar").update({"month": month}).eq("id", 1).execute()
+        db_dict = self.dataManipulator.todict(col, values)
 
-    def set_year(self, year: int):
-        year = str(year)
-        self.db.table("calendar").update({"year": year}).eq("id", 1).execute()
-
-    def set_week_day(self, week_day: int):
-        self.db.table("calendar").update({"week_day": week_day}).eq("id", 1).execute()
-
-    def set_ship(self, ship: bool):
-        self.db.table("calendar").update({"shipping": ship}).eq("id", 1).execute()
+        self.db.table("calendar").update(db_dict).eq(self.DatabaseColName.ID.value, 1).execute()

@@ -10,17 +10,14 @@ class CalendarRepository:
         self.db = CalendarOperation()
 
     def load(self) -> Calendar:
+        date = self.db.get_date()
         return Calendar(
-            day = self.db.get_day(),
-            month = self.db.get_month(),
-            year = self.db.get_year(),
-            week_day = self.db.get_week_day()
+            day = int(date["day"]),
+            month = int(date["month"]),
+            year = int(date["year"]),
+            week_day = int(date["week_day"])
         )
 
     def save(self, calendar: Calendar):
-        self.db.set_day(calendar.day)
-        self.db.set_month(calendar.month)
-        self.db.set_year(calendar.year)
-        self.db.set_week_day(calendar.week_day)
-        self.db.set_ship(calendar.can_ship())
+        self.db.set_date(calendar.day, calendar.month, calendar.year, calendar.week_day, calendar.can_ship())
         self.logger.info(self.filename, "Nuova data salvata nel database")

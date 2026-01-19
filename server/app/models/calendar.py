@@ -1,3 +1,5 @@
+from enum import Enum
+
 class Calendar:
     MONTHS = {
         1: "GENNAIO", 2: "FEBBRAIO", 3: "MARZO", 4: "APRILE",
@@ -31,6 +33,7 @@ class Calendar:
         if month_name in self.SHORT_MONTHS:
             return 30
         return 29 if self.is_leap_year() else 28
+    
 
     def advance_day(self):
         self.day += 1
@@ -45,3 +48,4 @@ class Calendar:
 
     def can_ship(self):
         return self.WEEK_DAYS[self.week_day] in self.WORKING_DAYS
+    

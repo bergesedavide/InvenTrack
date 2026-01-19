@@ -15,14 +15,14 @@ class CalendarScheduler:
 
     def start(self):
         if self._running:
-            self.logger.warning(self.filename, f"[{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}] Avanzamento automatico gia attivo")
+            self.logger.warning(self.filename, f"Avanzamento automatico gia attivo", datetime.now().strftime("%d-%m-%Y, %H:%M:%S"))
             return
 
         self._running = True
 
         def _tick():
             if not self._running:
-                self.logger.warning(self.filename, f"[{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}] Avanzamento automatico non attivo")
+                self.logger.warning(self.filename, f"Avanzamento automatico non attivo", datetime.now().strftime("%d-%m-%Y, %H:%M:%S"))
                 return
 
             self.service.advance_calendar()
@@ -32,10 +32,10 @@ class CalendarScheduler:
 
         self._timer = threading.Timer(self.interval, _tick)
         self._timer.start()
-        self.logger.info(self.filename, f"[{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}] Avanzamento automatico iniziato")
+        self.logger.info(self.filename, f"Avanzamento automatico iniziato", datetime.now().strftime("%d-%m-%Y, %H:%M:%S"))
 
     def stop(self):
         self._running = False
         if self._timer:
             self._timer.cancel()
-            self.logger.info(self.filename, f"[{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}] Avanzamento automatico terminato")
+            self.logger.info(self.filename, f"Avanzamento automatico terminato", datetime.now().strftime("%d-%m-%Y, %H:%M:%S"))

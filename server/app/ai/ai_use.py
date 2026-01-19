@@ -1,5 +1,4 @@
 from app.ai.ai_conn import get_ai_client
-import ast
 
 class AiUse:
     def __init__(self, ai_model):
@@ -53,6 +52,3 @@ class AiUse:
             )
         
             return result.get("response", "")
-        
-    def literal_eval(self, message: str):
-        return ast.literal_eval(message)

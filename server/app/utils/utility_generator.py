@@ -1,5 +1,8 @@
+from app.database.token_repository import TokenRepository
 import secrets
 import string
+
+tokenRepo = TokenRepository()
 
 # Creazione di un generatore di token univoco
 def generate_token(email: str, length: int = 32):
@@ -9,12 +12,13 @@ def generate_token(email: str, length: int = 32):
     alphabets = string.ascii_letters + string.digits
     token = "".join(secrets.choice(alphabets) for _ in range(length))
 
+    tokens = tokenRepo.get_tokens()
     # Controllare che il token non esista già
-    if token in []:
-        generate_token()
+    if token in tokens:
+        print("Token da riaggiornare")
+        generate_token(email)
     else:
-        # Aggiungere il token alla lista di quelli in uso
-        pass
+        tokenRepo.set_token(email, token)
 
     return token
 

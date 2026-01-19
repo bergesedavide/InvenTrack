@@ -34,7 +34,7 @@ class CalendarService:
         cal = self.repo.load()
         cal.advance_day()
         self.repo.save(cal)
-        self.logger.info(self.filename, f"[{datetime.now().strftime("%d-%m-%Y, %H:%M:%S")}] Nuova data: {cal.day:02}-{cal.month:02}-{cal.year:04}")
+        self.logger.info(self.filename, f"Nuova data: {cal.day:02}-{cal.month:02}-{cal.year:04}", datetime.now().strftime("%d-%m-%Y, %H:%M:%S"))
         return {
             "day": cal.day,
             "month": cal.month,
