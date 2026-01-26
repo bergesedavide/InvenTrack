@@ -1,6 +1,7 @@
-python-dotenv
-supabase
-flask
-flask-cors
-waitress
-ollama
+python-dotenv==1.2.1
+supabase==2.27.1
+flask==3.1.2
+flask-cors==6.0.2
+waitress==3.0.2
+ollama==0.6.1
+colorama==0.4.6

@@ -44,7 +44,7 @@ class DataManipulation:
         result_dict = dict(zip(new_key_list, new_value_list))
         return result_dict
 
-    def tolist(self, value: str):
-        value_list = list(value)
+    def tolist(self, **args):
+        value_list = list(args)
 
         return value_list

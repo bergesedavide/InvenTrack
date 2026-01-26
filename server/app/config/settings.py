@@ -30,8 +30,9 @@ class UserRoles(Enum):
     ADMIN = 1
 
 class AiModel(Enum):
+    BASE = "llama3.1:8b"
     DISTANCE_CALC = "AI_MODEL_DISTANCE_CALC"
-    CHATBOT = "AI_MODEL_CHATBOT"
+    CHATBOT = "chatbot"
 
 # ----------------------------
 # FUNZIONI

@@ -1,54 +1,79 @@
-from app.ai.ai_conn import get_ai_client
+from app.config import AiModel
+from app.ai.json_operations import JsonOperations
 
-class AiUse:
-    def __init__(self, ai_model):
-        self.conn = get_ai_client(ai_model)
-        self.client = self.conn["client"]
-        self.model = self.conn["model"]
+import ollama, subprocess
 
-    def response(self, prompt: str, stream: bool = False, num_predict: int = 512, temperature: float = 0.7):
-        """
-        Genera una risposta dall'AI con ottimizzazioni per velocità.
+class Ai:
+    def __init__(self):
+        self.client = ollama.Client(host="http://127.0.0.1:8080/ai")
+
+    def open_model(self, model: AiModel):
+        if not isinstance(model, AiModel):
+            return {"message": f"Impossibile connettersi al model [{model}] perché inesistente", "cod": 404}
         
-        Args:
-            prompt: Il prompt da inviare all'AI
-            stream: Se True, restituisce uno stream invece di attendere la risposta completa
-            num_predict: Numero massimo di token da generare (minore = più veloce)
-            temperature: Controlla la creatività (0.0-1.0, più basso = più veloce e determinista)
+        model_name = model.value
+
+        ollama.chat(
+            model=model_name,
+            messages=[{"role": "user", "content": ""}]
+        )
+
+    def train_model(self, model: AiModel):
+        if not isinstance(model, AiModel):
+            return {"message": f"Impossibile connettersi al model [{model}] perché inesistente", "cod": 404}
         
-        Returns:
-            La risposta dell'AI o uno stream generator
-        """
-        
-        # Parametri ottimizzati per velocità
-        options = {
-            "num_predict": num_predict,  # Limita i token generati
-            "temperature": temperature,   # Più basso = più veloce
-            "top_p": 0.9,                 # Nucleus sampling
-            "top_k": 40,                  # Limita le scelte
+        model_name = model.value
+
+    def ask_model(self, model: AiModel, msg: str):
+        if not isinstance(model, AiModel):
+            return {"message": f"Impossibile connettersi al model [{model}] perché inesistente", "cod": 404}
+
+        model_name = model.value
+
+        chunks = ollama.chat(
+            model=model_name,
+            messages=[{"role": "user", "content": msg}],
+            stream=True
+        )
+
+        full_response = ""
+
+        for chunk in chunks:
+            if chunk.get("done") is True:
+                success = True
+
+            if "model" in chunk:
+                modelUsed = chunk["model"]
+            
+            if "message" in chunk:
+                token = chunk["message"]["content"]
+                role = chunk["message"]["role"]
+                full_response += token
+
+        if not success:
+            return {"message": "Non è stato possibile generare una risposta", "cod": 404}
+
+        if modelUsed != model_name:
+            return {"message": "Il modello usato non è quello corretto", "cod": 404}
+
+        messageToJson = {
+            "model": modelUsed,
+            "role": role,
+            "response": full_response
         }
-        
-        
-        if stream:
-            response = ""
-            # Streaming per risposte più veloci (ricevi i token man mano)
-            stream = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                options=options,
-                stream=True
-            )
 
-            for chunk in stream:
-                response += chunk["response"]
+        print(messageToJson)
 
-            return response
-        else:
-            # Risposta completa (più lenta ma completa)
-            result = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                options=options
-            )
+        return {"message": full_response, "cod": 200}
+
+
+    def close_model(self, model: AiModel):
+        if not isinstance(model, AiModel):
+            return {"message": f"Impossibile connettersi al model [{model}] perché inesistente", "cod": 404}
         
-            return result.get("response", "")
+        model_name = model.value
+
+        subprocess.run(
+            ["ollama", "stop", model_name],
+            check=False
+        )

@@ -2,6 +2,7 @@ from app.database.calendar_operations import CalendarOperation
 from app.models.calendar import Calendar
 from app.services.logger_service import LoggerService
 from app.config import LogFile
+from datetime import datetime
 
 class CalendarRepository:
     def __init__(self):
@@ -20,4 +21,4 @@ class CalendarRepository:
 
     def save(self, calendar: Calendar):
         self.db.set_date(calendar.day, calendar.month, calendar.year, calendar.week_day, calendar.can_ship())
-        self.logger.info(self.filename, "Nuova data salvata nel database")
+        self.logger.info(self.filename, "Nuova data salvata nel database", datetime.now().strftime("%d-%m-%Y, %H:%M:%S"))
