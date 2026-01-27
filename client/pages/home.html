@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvenTrack</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/dark-light.css">
+    <link rel="stylesheet" href="../styles/home.css">
+    <link rel="icon" type="image/png" href="../icons8-magazzino-16.png">
+</head>
+
+<body>
+    <nav class="navbar">
+        <input type="checkbox" id="mobile-toggle" class="mobile-menu-toggle">
+        <div class="navbar-inner">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../icons8-magazzino-50.png" alt="InvenTrack Logo" class="logo-image">
+                </div>
+                <span class="logo-text">InvenTrack</span> 
+            </a>
+            <ul class="nav-links">
+              <li><a href="servizi.html" class="nav-link">Servizi</a></li>
+              <li><a href="#" class="nav-link">Prezzi</a></li>
+              <li><a href="#" class="nav-link">Contatti</a></li>
+            </ul>
+
+            <button class="login-btn">Login</button>
+
+            <label for="mobile-toggle" class="mobile-menu-btn">
+              <svg
+                class="burger-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg
+                class="close-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </label>
+
+            <div class="mobile-menu">
+              <a href="#">Prodotti</a>
+              <a href="#">Servizi</a>
+              <a href="#">Contatti</a>
+              <a href="#" class="mobile-login-btn">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <input type="checkbox" id="dark-mode" class="dark-mode-toggle">
+    <label for="dark-mode" class="dark-mode-btn">
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+    </label>
+</body>
+
+</html>
