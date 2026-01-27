@@ -35,3 +35,6 @@ def generate_password(length: int = 16):
 def check_password_strength(password: str):
     pass
 
+# Generatore di booleano per decidere se l'utente ha la tessera o no
+def generate_card():
+    pass

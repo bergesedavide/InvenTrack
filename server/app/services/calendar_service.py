@@ -36,9 +36,9 @@ class CalendarService:
         self.repo.save(cal)
         self.logger.info(self.filename, f"Nuova data: {cal.day:02}-{cal.month:02}-{cal.year:04}", datetime.now().strftime("%d-%m-%Y, %H:%M:%S"))
         return {
-            "day": cal.day,
-            "month": cal.month,
-            "year": cal.year,
-            "shipping": cal.can_ship()
+            "giorno": cal.day,
+            "mese": cal.month,
+            "anno": cal.year,
+            "spedizione": cal.can_ship()
         }
 
