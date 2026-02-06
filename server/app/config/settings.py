@@ -13,7 +13,7 @@ class DataTypes(Enum):
     INTEGER = int
     FLOAT = float
     BOOLEAN = bool
-
+    
 class LogLevel(Enum):
     DEBUG = Fore.GREEN         # verde
     INFO = Fore.LIGHTBLUE_EX   # azzurro
@@ -23,7 +23,6 @@ class LogLevel(Enum):
 
 class LogFile(Enum):
     CALENDAR = "calendar.log"
-    USER = "user.log"
 
 # da studiare
 class UserRoles(Enum):
@@ -48,7 +47,7 @@ class DbTables(Enum):
 # ----------------------------
 
 def directory_log():
-    directories = ["config", "database", "logs", "models", "routes", "services"]
+    directories = ["config", "database", "logs", "models", "routes", "services", "ai"]
     base_dir = os.path.dirname(os.path.abspath(__file__))
     split = base_dir.split("\\")
     current_dir = split[len(split) - 1]
