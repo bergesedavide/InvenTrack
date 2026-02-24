@@ -1,9 +1,9 @@
 
 
 class City:
-    def __init__(self, desc: str, cap: str, lan: str, lon: str, idState: int):
+    def __init__(self, desc: str, idState: int, cap: str, lat: str, lon: str):
         self.desc = desc
-        self.cap = cap
-        self.lan = lan
-        self.lon = lon
         self.idState = idState
+        self.cap = cap
+        self.lat = lat
+        self.lon = lon

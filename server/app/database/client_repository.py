@@ -17,12 +17,12 @@ class ClientRepository:
         SURNAME = "cognome"
         EMAIL = "email"
         PWD = "password"
+        DATEBIRTH = "dataNascita"
+        CARD = "tessera"
         IDCITY = "idCitta"
+        CODGENDER = "codGenere"
         ADDRESS = "indirizzo"
         NUMADDRESS = "numeroCivico"
-        DATEBIRTH = "dataNascita"
-        IDGENRE = "idGenere"
-        CARD = "tessera"
         DATEREG = "dataReg"
 
     def get_client_by_id(self, idClient: int):
@@ -39,14 +39,14 @@ class ClientRepository:
     def save(self, client: Client):
         keys = [self.DatabaseColName.NAME.value, self.DatabaseColName.SURNAME.value,
                 self.DatabaseColName.EMAIL.value, self.DatabaseColName.PWD.value,
-                self.DatabaseColName.IDCITY.value, self.DatabaseColName.ADDRESS.value,
-                self.DatabaseColName.NUMADDRESS.value, self.DatabaseColName.DATEBIRTH.value,
-                self.DatabaseColName.IDGENRE.value, self.DatabaseColName.CARD.value,
+                self.DatabaseColName.DATEBIRTH.value, self.DatabaseColName.CARD.value,
+                self.DatabaseColName.IDCITY.value, self.DatabaseColName.CODGENDER.value, 
+                self.DatabaseColName.ADDRESS.value, self.DatabaseColName.NUMADDRESS.value, 
                 self.DatabaseColName.DATEREG.value]
         
-        values = [client.name, client.surname, client.email, client.password, client.idCity,
-                  client.address, client.numAddress, client.dateBirth, client.idGenre,
-                  client.card, client.dateReg]
+        values = [client.name, client.surname, client.email, client.password, client.dateBirth, 
+                  client.card, client.idCity, client.codGender, client.address, client.numAddress, 
+                  client.dateReg]
         
         db_dict = self.dataManipulator.todict(keys, values)
 

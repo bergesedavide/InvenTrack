@@ -1,6 +1,6 @@
 from app.database.token_repository import TokenRepository
-import secrets
-import string
+import secrets, string
+from random import random
 
 tokenRepo = TokenRepository()
 
@@ -23,7 +23,7 @@ def generate_token(email: str, length: int = 32):
     return token
 
 # Creazione di una password sicura
-def generate_password(length: int = 16):
+def generate_password(length: int = 16) -> str:
     if length < 8:
         return {"message": "Lunghezza troppo corta, rischio attacco hacker"}
     
@@ -36,5 +36,29 @@ def check_password_strength(password: str):
     pass
 
 # Generatore di booleano per decidere se l'utente ha la tessera o no
-def generate_card():
-    pass
+def generate_card() -> bool:
+    rnd = int(random() * 100)
+
+    if rnd <= 70:
+        return False
+    else:
+        return True
+
+# Sostitutore di domini email
+def replace_domain(email: str) -> str:
+    username = email.split("@")[0]
+
+    domains = ["gmail.com", "outlook.com", "yahoo.com", "icloud.com"]
+    rnd = int(random() * 100)
+
+    if rnd <= 62:
+        new_domain = domains[0]
+    elif rnd <= 84:
+        new_domain = domains[1]
+    elif rnd <= 93:
+        new_domain = domains[2]
+    elif rnd <= 100:
+        new_domain = domains[3]
+
+    new_email = username + "@" + new_domain
+    return new_email

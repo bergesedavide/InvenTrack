@@ -1,18 +1,16 @@
 from app.services.calendar_service import CalendarService
 
-from datetime import date
-
 class Client:
-    def __init__(self, name: str, surname: str, email: str, password: str, idCity: int, address: str, numAddress: int, dateBirth: date, codGenre: str, card: bool, dateReg: date):
+    def __init__(self, name: str, surname: str, email: str, password: str, dateBirth: str, card: bool, idCity: int, codGender: str, address: str, numAddress: int, dateReg: str):
         self.name = name
         self.surname = surname
         self.email = email
-        self.password = password        #TODO: deve essere già quella hashata
-        self.idCity = idCity            #TODO: deve essere già sotto forma di id
+        self.password = password
+        self.dateBirth = dateBirth
+        self.card = card
+        self.idCity = idCity
+        self.codGender = codGender
         self.address = address
         self.numAddress = numAddress
-        self.dateBirth = dateBirth
-        self.codGenre = codGenre        #TODO: deve essere già sotto forma di id
-        self.card = card                #TODO: deve essere già bool
-        self.dateReg = dateReg          #TODO: deve essere presa dal calendario
+        self.dateReg = dateReg
 
