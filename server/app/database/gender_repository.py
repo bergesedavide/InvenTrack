@@ -14,8 +14,14 @@ class GenderRepository:
         DESC = "desc"
         DESC_ENG = "desc_eng"
 
-    def get_genre_by_desc_eng(self, desc_eng: str) -> str:
+    def get_gender_by_desc_eng(self, desc_eng: str) -> str:
         response = self.db.table(self.tblAlias).select(self.DatabaseColName.COD.value).eq(self.DatabaseColName.DESC_ENG.value, desc_eng).execute()
+
+        if response.data:
+            return response.data[0][self.DatabaseColName.COD.value]
+        
+    def get_gender_by_desc(self, desc: str) -> str:
+        response = self.db.table(self.tblAlias).select(self.DatabaseColName.COD.value).eq(self.DatabaseColName.DESC.value, desc).execute()
 
         if response.data:
             return response.data[0][self.DatabaseColName.COD.value]

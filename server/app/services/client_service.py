@@ -30,7 +30,7 @@ class ClientService:
 
         for result in res["results"]:
             gender = result["gender"]
-            codGender = self.gender.get_genre_by_desc_eng(gender)
+            codGender = self.gender.get_gender_by_desc_eng(gender)
 
             result_name = result["name"]
             name = result_name["first"]
@@ -67,3 +67,6 @@ class ClientService:
             client = Client(name, surname, email, pwd, dob, card, idCity, codGender, address, numAddress, dateReg)
             
             self.clientRepo.save(client)
+
+    def get_client_by_id(self, idClient: int) -> Client:
+        return self.clientRepo.get_client_by_id(idClient)

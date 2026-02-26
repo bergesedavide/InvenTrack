@@ -37,10 +37,10 @@ class DbTables(Enum):
     CALENDAR = "calendario"
     CITIES = "citta"
     CLIENTS = "clienti"
+    EMPLOYEES = "dipendenti"
     GENDERS = "generi"
     ROLES = "ruoli"
     STATES = "stati"
-
 
 # ----------------------------
 # FUNZIONI
@@ -56,7 +56,3 @@ def directory_log():
         return os.path.join(base_dir, "..", "logs")
     else:
         return {"message": "Posizione di accesso non supportata"}
-    
-def list_domain():
-    # TODO: probabile necessità di richiamo di un database
-    return []

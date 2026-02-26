@@ -14,7 +14,6 @@ class TokenRepository:
         CREATED_AT = "created_at"
 
     def get_tokens(self):
-        
         response = self.db.table("tokens").select(self.DatabaseColName.TOKEN.value).execute()
 
         tokens = []

@@ -1,0 +1,10 @@
+
+
+class Employee:
+    def __init__(self, surname: str, name: str, email: str, password: str, idRole: int = None, idWorkPlace: int = None):
+        self.surname = surname
+        self.name = name
+        self.email = email
+        self.password = password
+        self.idRole = idRole
+        self.idWorkPlace = idWorkPlace

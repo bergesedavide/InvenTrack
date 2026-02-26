@@ -14,15 +14,17 @@ class CityRepository:
     class DatabaseColName(Enum):
         ID = "id"
         DESC = "desc"
+        IDSTATE = "idStato"
         CAP = "cap"
         LAT = "latitudine"
         LON = "longitudine"
-        IDSTATE = "idStato"
 
     def get_city_by_id(self, idCity: int):
         response = self.db.table(self.tblAlias).select("*").eq(self.DatabaseColName.ID.value, idCity).execute()
+        response = response.data[0]
 
-        return response.data[0]
+        city = City(response["desc"], response["idStato"], response["cap"], response["latitudine"], response["longitudine"])
+        return city
     
     def get_id_by_desc(self, city: City) -> int:
         response = self.db.table(self.tblAlias).select(self.DatabaseColName.ID.value).eq(self.DatabaseColName.DESC.value, city.desc).execute()
