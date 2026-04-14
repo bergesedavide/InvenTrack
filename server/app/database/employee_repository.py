@@ -29,3 +29,8 @@ class EmployeeRepository:
         db_dict = self.dataManipulator.todict(keys, values)
         
         self.db.table(self.tblAlias).insert(db_dict).execute()
+
+    def get_email_password(self) -> list[dict[str, str]]:
+        response = self.db.table(self.tblAlias).select(self.DatabaseColName.EMAIL.value, self.DatabaseColName.PWD.value).execute()
+        
+        return response.data

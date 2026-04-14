@@ -5,7 +5,8 @@ import ollama, subprocess
 
 class Ai:
     def __init__(self):
-        self.client = ollama.Client(host="http://127.0.0.1:8080/ai")
+        pass
+        #self.client = ollama.Client(host="http://127.0.0.1:8080/ai")
 
     def open_model(self, model: AiModel):
         if not isinstance(model, AiModel):

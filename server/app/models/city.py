@@ -7,3 +7,8 @@ class City:
         self.cap = cap
         self.lat = lat
         self.lon = lon
+
+
+class State:
+    def __init__(self, desc):
+        self.desc = desc

@@ -1,6 +1,5 @@
 from app.database.database_connection import get_supabase_client
 from app.config import DbTables
-from app.models.gender import Gender
 
 from enum import Enum
 

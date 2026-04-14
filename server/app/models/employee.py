@@ -8,3 +8,9 @@ class Employee:
         self.password = password
         self.idRole = idRole
         self.idWorkPlace = idWorkPlace
+
+
+class Role:
+    def __init__(self, idRole: int, desc: str):
+        self.idRole = idRole
+        self.desc = desc

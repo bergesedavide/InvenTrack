@@ -1,10 +1,12 @@
 from flask import Blueprint, request, jsonify
 from app.utils.utility_generator import generate_token
+from app.services.authentication_service import AuthenticationService
 
 auth_bp = Blueprint("auth", __name__)
 
-@auth_bp.route("/login", methods=["GET", "POST"])
+@auth_bp.route("/login", methods=["POST"])
 def handle_login():
+    clsAuth = AuthenticationService()
     data = request.get_json()
 
     if not data:
@@ -13,16 +15,14 @@ def handle_login():
     email = data.get("email")
     password = data.get("password")
 
-    #auth = check_login(email, password)
-    token = generate_token()
-
-    auth = True
+    auth = clsAuth.check_login(email, password)
+    #token = generate_token(email)
 
     if auth:
         return jsonify({
             "status": "successo",
             "message": "Login effettuato con successo",
-            "token": token
+            #"token": token
         }), 200
     else:
         return jsonify({

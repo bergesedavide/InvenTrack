@@ -8,7 +8,7 @@ class EmployeeService:
         self.employeeRepo = EmployeeRepository()
         self.roleRepo = RoleRepository()
 
-    def add_employee(self, surname, name, email, password = None, role = None, workPlace = None):
+    def add_employee(self, surname: str, name: str, email: str, password: str = None, role: str = None, workPlace: str = None):
         
         if not password:
             password = generate_password()

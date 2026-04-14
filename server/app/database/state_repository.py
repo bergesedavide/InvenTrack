@@ -1,7 +1,6 @@
 from app.database.database_connection import get_supabase_client
 from app.utils.data_types_creation import DataManipulation
 from app.config import DbTables
-from app.models.state import State
 
 from enum import Enum
 

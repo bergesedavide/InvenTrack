@@ -11,13 +11,6 @@ class ClientRepository:
         self.dataManipulator = DataManipulation()
         self.tblAlias = DbTables.CLIENTS.value
 
-        self.keys = [self.DatabaseColName.NAME.value, self.DatabaseColName.SURNAME.value,
-                     self.DatabaseColName.EMAIL.value, self.DatabaseColName.PWD.value,
-                     self.DatabaseColName.DATEBIRTH.value, self.DatabaseColName.CARD.value,
-                     self.DatabaseColName.IDCITY.value, self.DatabaseColName.CODGENDER.value, 
-                     self.DatabaseColName.ADDRESS.value, self.DatabaseColName.NUMADDRESS.value, 
-                     self.DatabaseColName.DATEREG.value]
-
     class DatabaseColName(Enum):
         ID = "id"
         NAME = "nome"
@@ -36,9 +29,9 @@ class ClientRepository:
         response = self.db.table(self.tblAlias).select("*").eq(self.DatabaseColName.ID.value, idClient).execute()
         response = response.data[0]
         
-        client = Client(response["nome"], response["cognome"], response["email"], response["password"], response["dataNascita"],
-                        response["tessera"], response["idCitta"], response["codGenere"], response["indirizzo"], response["numeroCivico"],
-                        response["dataReg"])
+        client = Client(response[self.DatabaseColName.NAME.value], response[self.DatabaseColName.SURNAME.value], response[self.DatabaseColName.EMAIL.value], response[self.DatabaseColName.PWD.value], response[self.DatabaseColName.DATEBIRTH.value],
+                        response[self.DatabaseColName.CARD.value], response[self.DatabaseColName.IDCITY.value], response[self.DatabaseColName.CODGENDER.value], response[self.DatabaseColName.ADDRESS.value], response[self.DatabaseColName.NUMADDRESS.value],
+                        response[self.DatabaseColName.DATEREG.value])
         
         return client
     
@@ -51,10 +44,16 @@ class ClientRepository:
         return ids
     
     def save(self, client: Client):
+        keys = [self.DatabaseColName.NAME.value, self.DatabaseColName.SURNAME.value,
+                     self.DatabaseColName.EMAIL.value, self.DatabaseColName.PWD.value,
+                     self.DatabaseColName.DATEBIRTH.value, self.DatabaseColName.CARD.value,
+                     self.DatabaseColName.IDCITY.value, self.DatabaseColName.CODGENDER.value, 
+                     self.DatabaseColName.ADDRESS.value, self.DatabaseColName.NUMADDRESS.value, 
+                     self.DatabaseColName.DATEREG.value]
         values = [client.name, client.surname, client.email, client.password, client.dateBirth, 
                   client.card, client.idCity, client.codGender, client.address, client.numAddress, 
                   client.dateReg]
         
-        db_dict = self.dataManipulator.todict(self.keys, values)
+        db_dict = self.dataManipulator.todict(keys, values)
 
         self.db.table(self.tblAlias).insert(db_dict).execute()

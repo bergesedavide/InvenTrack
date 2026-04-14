@@ -29,16 +29,19 @@ class UserRoles(Enum):
     ADMIN = 1
 
 class AiModel(Enum):
-    BASE = "llama3.2"
-    DISTANCE_CALC = "AI_MODEL_DISTANCE_CALC"
-    CHATBOT = "chatbot"
+    pass
 
 class DbTables(Enum):
+    BOSSES = "capiAziendali"
     CALENDAR = "calendario"
+    CATEGORIES = "categorie"
     CITIES = "citta"
     CLIENTS = "clienti"
+    COMPANY = "aziende"
     EMPLOYEES = "dipendenti"
     GENDERS = "generi"
+    PRICING = "pianiRegistrazione"
+    PRODUCTS = "prodotti"
     ROLES = "ruoli"
     STATES = "stati"
 
