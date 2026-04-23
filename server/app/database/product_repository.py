@@ -18,12 +18,21 @@ class ProductRepository:
         PRICE = "prezzo"
         IDCOMPANY = "idAzienda"
 
-    def get_all_product(self):
-        response = self.db.table(self.tblAlias).select("*").execute()
-        
+    def get_all_product(self, idCategory: int = None):
+        if idCategory:
+            response = self.db.table(self.tblAlias).select("*").neq(self.DatabaseColName.IDCATEGORY.value, idCategory).execute()
+        else:
+            response = self.db.table(self.tblAlias).select("*").execute()
+
         if response.data:
             return response.data
+        
+    def get_all_product_by_id(self, idCategory: int):
+        if idCategory:
+            response = self.db.table(self.tblAlias).select("*").eq(self.DatabaseColName.IDCATEGORY.value, idCategory).execute()
 
+        if response.data:
+            return response.data
 
     def save(self, product: Product):
         keys = [self.DatabaseColName.ID.value, self.DatabaseColName.NAME.value, self.DatabaseColName.IDCATEGORY.value, self.DatabaseColName.PRICE.value, self.DatabaseColName.IDCOMPANY.value]

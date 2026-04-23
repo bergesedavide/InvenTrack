@@ -35,6 +35,12 @@ class CompanyRepository:
         
         return company
 
+    def get_name_by_id(self, idCompany: int) -> str:
+        response = self.db.table(self.tblAlias).select(self.DatabaseColName.NAME.value).eq(self.DatabaseColName.ID.value, idCompany).execute()
+        
+        if response.data:
+            return str(response.data[0][self.DatabaseColName.NAME.value])
+
     def get_id_by_desc(self, desc: str) -> int:
         response = self.db.table(self.tblAlias).select(self.DatabaseColName.ID.value).eq(self.DatabaseColName.DESC.value, desc).execute()
 

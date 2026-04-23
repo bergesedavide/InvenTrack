@@ -16,9 +16,11 @@ def create_app():
     from app.routes.calendars import calendar_bp
     from app.routes.authentications import auth_bp
     from app.routes.ai import ai_bp
+    from app.routes.products import prod_bp
 
     app.register_blueprint(calendar_bp, url_prefix="/calendars")
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(ai_bp, url_prefix="/ai")
+    app.register_blueprint(prod_bp, url_prefix="/products")
 
     return app

@@ -13,13 +13,13 @@ class CategoryRepository:
 
     class DatabaseColName(Enum):
         ID = "id"
-        DESC = "name"
+        DESC = "desc"
 
     def get_desc_by_id(self, idCategory: int) -> str:
         response = self.db.table(self.tblAlias).select(self.DatabaseColName.DESC.value).eq(self.DatabaseColName.ID.value, idCategory).execute()
         
         if response.data:
-            return int(response.data[0][self.DatabaseColName.ID.value])
+            return str(response.data[0][self.DatabaseColName.DESC.value])
 
     def get_id_by_desc(self, desc: str) -> int:
         response = self.db.table(self.tblAlias).select(self.DatabaseColName.ID.value).eq(self.DatabaseColName.DESC.value, desc).execute()

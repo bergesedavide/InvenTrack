@@ -6,7 +6,7 @@ const Sidebar = ({ active, onChange }) => {
     { id: 'products', label: 'Prodotti' },
     { id: 'orders', label: 'Ordini' },
     { id: 'analytics', label: 'Analytics' },
-    { id: 'settings', label: 'Impostazioni' },
+    { id: 'info', label: 'Informazioni' },
   ];
 
   return (

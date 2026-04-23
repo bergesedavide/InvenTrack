@@ -9,8 +9,8 @@ class ProductService:
         self.catRepo = CategoryRepository()
         self.compRepo = CompanyRepository()
     
-    def get_all_product(self):
-        product = self.prodRepo.get_all_product()
+    def get_all_product(self, idCategory: int = None):
+        product = self.prodRepo.get_all_product(idCategory)
 
         for p in product:
             p["name"] = p.pop("nome")
@@ -18,4 +18,17 @@ class ProductService:
             p["price"] = p.pop("prezzo")
             p["idCompany"] = p.pop("idAzienda")
     
+        print(product)
+        return product
+    
+    def get_all_product_by_id(self, idCategory: int = None):
+        product = self.prodRepo.get_all_product_by_id(idCategory)
+
+        for p in product:
+            p["name"] = p.pop("nome")
+            p["idCategory"] = p.pop("idCategoria")
+            p["price"] = p.pop("prezzo")
+            p["idCompany"] = p.pop("idAzienda")
+    
+        print(product)
         return product
