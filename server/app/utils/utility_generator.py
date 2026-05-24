@@ -2,8 +2,6 @@ from app.database.token_repository import TokenRepository
 import secrets, string
 from random import random
 
-tokenRepo = TokenRepository()
-
 # Creazione di un generatore di token univoco
 def generate_token(email: str, length: int = 32):
     if length < 24:
@@ -12,6 +10,8 @@ def generate_token(email: str, length: int = 32):
     alphabets = string.ascii_letters + string.digits
     token = "".join(secrets.choice(alphabets) for _ in range(length))
 
+    tokenRepo = TokenRepository()
+    
     tokens = tokenRepo.get_tokens()
     # Controllare che il token non esista già
     if token in tokens:

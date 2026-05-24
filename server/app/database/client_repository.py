@@ -57,3 +57,25 @@ class ClientRepository:
         db_dict = self.dataManipulator.todict(keys, values)
 
         self.db.table(self.tblAlias).insert(db_dict).execute()
+
+
+    def get_by_email(self, email: str):
+        """Recupera un cliente per email"""
+        response = self.db.table(self.tblAlias).select("*").eq(self.DatabaseColName.EMAIL.value, email).execute()
+        
+        if response.data:
+            client = response.data[0]
+            return Client(
+                client[self.DatabaseColName.NAME.value],
+                client[self.DatabaseColName.SURNAME.value],
+                client[self.DatabaseColName.EMAIL.value],
+                client[self.DatabaseColName.PWD.value],
+                client[self.DatabaseColName.DATEBIRTH.value],
+                client[self.DatabaseColName.CARD.value],
+                client[self.DatabaseColName.IDCITY.value],
+                client[self.DatabaseColName.CODGENDER.value],
+                client[self.DatabaseColName.ADDRESS.value],
+                client[self.DatabaseColName.NUMADDRESS.value],
+                client[self.DatabaseColName.DATEREG.value]
+            )
+        return None

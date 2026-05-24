@@ -35,3 +35,19 @@ class BossRepository:
 
         self.db.table(self.tblAlias).insert(db_dict).execute()
     
+    def get_by_email(self, email: str):
+        """Recupera un boss per email"""
+        response = self.db.table(self.tblAlias).select("*").eq(self.DatabaseColName.EMAIL.value, email).execute()
+        
+        if response.data:
+            boss = response.data[0]
+            return {
+                "id": boss.get(self.DatabaseColName.ID.value),
+                "surname": boss.get(self.DatabaseColName.SURNAME.value),
+                "name": boss.get(self.DatabaseColName.NAME.value),
+                "email": boss.get(self.DatabaseColName.EMAIL.value),
+                "password": boss.get(self.DatabaseColName.PWD.value),
+                "birthDate": boss.get(self.DatabaseColName.DATEBIRTH.value),
+                "birthState": boss.get(self.DatabaseColName.STATEBIRTH.value)
+            }
+        return None

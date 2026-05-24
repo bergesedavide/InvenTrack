@@ -55,3 +55,17 @@ class CompanyRepository:
         db_dict = self.dataManipulator.todict(keys, values)
 
         self.db.table(self.tblAlias).insert(db_dict).execute()
+
+    def get_by_boss_id(self, idBoss: int):
+        """Recupera l'azienda associata a un boss"""
+        response = self.db.table(self.tblAlias).select("*").eq(self.DatabaseColName.IDBOSS.value, idBoss).execute()
+        
+        if response.data:
+            company = response.data[0]
+            return {
+                "id": company.get(self.DatabaseColName.ID.value),
+                "name": company.get(self.DatabaseColName.NAME.value),
+                "idBoss": company.get(self.DatabaseColName.IDBOSS.value),
+                "idPricing": company.get(self.DatabaseColName.IDPRICING.value)
+            }
+        return None

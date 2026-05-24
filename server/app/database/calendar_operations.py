@@ -35,7 +35,7 @@ class CalendarOperation:
         if col == self.DatabaseColName.WEEK_DAY:
             return int(response.data[0][self.DatabaseColName.WEEK_DAY.value])
         
-        if col == self.DatabaseColName.SHIP.value:
+        if col == self.DatabaseColName.SHIP:
             return bool(response.data[0][self.DatabaseColName.SHIP.value])
         
         if not col:

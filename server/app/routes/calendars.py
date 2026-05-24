@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from app.services.calendar_service import CalendarService
 from app.services.calendar_scheduler import CalendarScheduler
+from app.core.decorators import token_required
 
 calendar_bp = Blueprint("calendars", __name__)
 calendar_service = CalendarService()
@@ -18,6 +19,7 @@ def get_full_date():
     return jsonify({"date": date}), 200
 
 @calendar_bp.route("/advance", methods=["GET", "POST"])
+@token_required
 def advance_calendar():
     result = calendar_service.advance_calendar()
     return jsonify(result), 200
@@ -28,11 +30,13 @@ def can_ship():
     return jsonify({"ship": result}), 200
 
 @calendar_bp.route("/start", methods=["GET", "POST"])
+@token_required
 def start():
     calendar_scheduler.start()
     return jsonify({"message": "Avanzamento automatico della data iniziato"}), 200
 
 @calendar_bp.route("/stop", methods=["GET", "POST"])
+@token_required
 def stop():
     calendar_scheduler.stop()
     return jsonify({"message": "Avanzamento automatico della data fermato"}), 200

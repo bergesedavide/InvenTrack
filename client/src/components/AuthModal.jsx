@@ -75,7 +75,7 @@ const AuthModal = ({ open, initialMode = 'login', onClose }) => {
     };
 
     try {
-      const response = await fetch('http://localhost:5050/auth/login', {
+      const response = await fetch('https://wcwffjp7-5050.euw.devtunnels.ms/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ const AuthModal = ({ open, initialMode = 'login', onClose }) => {
     setStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleRegisterSubmit = (event) => {
+  const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     setError('');
 
@@ -213,7 +213,12 @@ const AuthModal = ({ open, initialMode = 'login', onClose }) => {
       logoFileName: logoFile ? logoFile.name : null,
     };
 
-    // TODO: collega queste chiamate al tuo backend; per il logo usa FormData
+    const response = await fetch('https://wcwffjp7-5050.euw.devtunnels.ms/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
     console.log('Auth register submit', payload);
     onClose();
   };

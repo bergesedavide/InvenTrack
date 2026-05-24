@@ -6,6 +6,7 @@ from app.database.gender_repository import GenderRepository
 from app.database.client_repository import ClientRepository
 from app.services.calendar_service import CalendarService
 from app.utils.utility_generator import replace_domain, generate_card, generate_password
+from typing import List, Dict, Any, Optional
 
 import requests
 
@@ -70,3 +71,39 @@ class ClientService:
 
     def get_client_by_id(self, idClient: int) -> Client:
         return self.clientRepo.get_client_by_id(idClient)
+    
+    def count_clients(self) -> int:
+        """Restituisce il numero totale di clienti"""
+        ids = self.clientRepo.get_all_id()
+        return len(ids) if ids else 0
+    
+    def get_all_clients(self, limit: int = 100) -> List[Dict[str, Any]]:
+        """Lista tutti i clienti"""
+        ids = self.clientRepo.get_all_id()
+        clients = []
+        for client_id in ids[:limit]:
+            client = self.get_client_by_id(client_id)
+            if client:
+                clients.append({
+                    "id": client_id,
+                    "name": client.name,
+                    "surname": client.surname,
+                    "email": client.email,
+                    "card": client.card,
+                    "dateReg": client.dateReg
+                })
+        return clients
+
+    def count_clients(self) -> int:
+        """Numero totale clienti"""
+        ids = self.clientRepo.get_all_id()
+        return len(ids) if ids else 0
+
+    def search_clients(self, query: str) -> List[Dict[str, Any]]:
+        """Cerca clienti per nome o email"""
+        all_clients = self.get_all_clients(limit=1000)
+        query_lower = query.lower()
+        return [c for c in all_clients 
+                if query_lower in c["name"].lower() 
+                or query_lower in c["surname"].lower() 
+                or query_lower in c["email"].lower()]

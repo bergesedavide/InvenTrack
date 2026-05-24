@@ -34,3 +34,23 @@ class EmployeeRepository:
         response = self.db.table(self.tblAlias).select(self.DatabaseColName.EMAIL.value, self.DatabaseColName.PWD.value).execute()
         
         return response.data
+    
+    def get_by_email(self, email: str):
+        """Recupera un dipendente per email"""
+        response = self.db.table(self.tblAlias).select("*").eq(self.DatabaseColName.EMAIL.value, email).execute()
+        
+        if response.data:
+            emp = response.data[0]
+            return {
+                "id": emp.get(self.DatabaseColName.ID.value),
+                "surname": emp.get(self.DatabaseColName.SURNAME.value),
+                "name": emp.get(self.DatabaseColName.NAME.value),
+                "email": emp.get(self.DatabaseColName.EMAIL.value),
+                "password": emp.get(self.DatabaseColName.PWD.value),
+                "idRole": emp.get(self.DatabaseColName.IDROLE.value),
+                "idWorkPlace": emp.get(self.DatabaseColName.IDWORKPLACE.value)
+            }
+        return None
+    
+    def get_all():
+        return []

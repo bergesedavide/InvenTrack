@@ -23,6 +23,9 @@ class LogLevel(Enum):
 
 class LogFile(Enum):
     CALENDAR = "calendar.log"
+    SIMULATION = "simulation.log"
+    DATABASE = "database.log"
+    API = "api.log"
 
 # da studiare
 class UserRoles(Enum):
@@ -44,6 +47,12 @@ class DbTables(Enum):
     PRODUCTS = "prodotti"
     ROLES = "ruoli"
     STATES = "stati"
+    ORDERS = "ordini"
+    ORDER_DETAILS = "dettagliordini"
+    MOVEMENTS = "movimentimagazzino"
+    SIMULATION_STATE = "simulazione_stato"
+    TOKENS = "tokens"
+    SYSTEM_LOGS = "system_logs"
 
 # ----------------------------
 # FUNZIONI

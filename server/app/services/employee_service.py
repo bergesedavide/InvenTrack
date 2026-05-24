@@ -25,3 +25,7 @@ class EmployeeService:
         emp = Employee(surname, name, email, password, idRole, idWorkPlace)
 
         self.employeeRepo.save(emp)
+
+    def get_all_employees(self) -> list:
+        """Restituisce tutti i dipendenti"""
+        return self.employeeRepo.get_all()  # Da aggiungere in EmployeeRepository
