@@ -38,6 +38,10 @@ const DashboardHome = ({ products, onRefresh }) => {
     };
     
     fetchKPI();
+
+    const intervalId = setInterval(fetchKPI, 10 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const formatCurrency = (value) => `€${(value || 0).toLocaleString('it-IT')}`;
@@ -57,6 +61,13 @@ const DashboardHome = ({ products, onRefresh }) => {
     }
     return calendarData.date;
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(getSimulatedDate, 5 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+
+  })
 
   if (loading) return <div className="dashboard-home"><div className="loading-spinner">Caricamento dashboard...</div></div>;
 

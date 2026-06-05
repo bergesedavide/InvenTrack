@@ -19,18 +19,9 @@ const AnalyticsPage = () => {
   const [criticalStock, setCriticalStock] = useState([]);
   const [insights, setInsights] = useState([]);
 
-  // Recupera token dal localStorage
-  const getToken = () => localStorage.getItem('access_token');
-
   // Fetch con autenticazione
   const fetchWithAuth = async (url) => {
-    const token = getToken();
-    const response = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
+    const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return response.json();
   };
@@ -51,6 +42,7 @@ const AnalyticsPage = () => {
         setSalesData(salesTrend);
         setCategoryData(categories);
         setTopProducts(products);
+        console.log('📊 Top products ricevuti:', products),
         setCriticalStock(critical);
         
         // Insights (opzionale - possono venire da API o essere generati)
@@ -82,13 +74,6 @@ const AnalyticsPage = () => {
     <div className="analytics-page">
       <div className="analytics-header">
         <h1>Analytics & Intelligence</h1>
-        <div className="analytics-controls">
-          <div className="time-range-selector">
-            <button className={`range-btn ${timeRange === 'month' ? 'active' : ''}`} onClick={() => setTimeRange('month')}>Mese</button>
-            <button className={`range-btn ${timeRange === 'quarter' ? 'active' : ''}`} onClick={() => setTimeRange('quarter')}>Trimestre</button>
-            <button className={`range-btn ${timeRange === 'year' ? 'active' : ''}`} onClick={() => setTimeRange('year')}>Anno</button>
-          </div>
-        </div>
       </div>
 
       {/* KPI Cards - DATI REALI */}
@@ -151,19 +136,34 @@ const AnalyticsPage = () => {
 
       {/* Categorie - DATI REALI */}
       <div className="analytics-grid-2col">
-        <div className="analytics-card">
-          <h3>Vendite per Categoria</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <PieChart>
-              <Pie data={categoryData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={2} dataKey="value"
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
-                {categoryData.map((entry, index) => (<Cell key={`cell-${index}`} fill={getCategoryColors()[index % getCategoryColors().length]} />))}
-              </Pie>
-              <Tooltip formatter={(value) => formatCurrency(value)} />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+          <div className="analytics-card">
+            <h3>Vendite per Categoria</h3>
+            <ResponsiveContainer width="100%" height={280}>
+              <PieChart>
+                <Pie
+                  data={categoryData.slice(0, 5)}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  paddingAngle={2}
+                  dataKey="value"
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                >
+                  {categoryData.slice(0, 5).map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={getCategoryColors()[index % getCategoryColors().length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => formatCurrency(value)} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+            {categoryData.length > 5 && (
+              <div className="other-categories" style={{ textAlign: 'center', marginTop: 10, fontSize: 12, color: 'var(--muted)' }}>
+                + altre {categoryData.length - 5} categorie non visualizzate
+              </div>
+            )}
+          </div>
 
         {/* Top Products - DATI REALI */}
         <div className="analytics-card">

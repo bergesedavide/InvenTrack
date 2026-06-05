@@ -36,7 +36,7 @@ const Dashboard = () => {
     }, 5 * 60 * 1000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchProducts]);
 
   // Funzione per forzare refresh manuale
   const handleRefresh = () => {

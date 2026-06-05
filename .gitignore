@@ -4,7 +4,6 @@
 test.py
 __pycache__
 *.json
-*.md
 
 # file di testo
 *.txt

@@ -68,3 +68,22 @@ class OrderDetailRepository:
     def _recalculate_order_total(self, order_id: int) -> None:
         """Ricalcola il totale dell'ordine chiamando la funzione SQL"""
         self.db.rpc("calcola_totale_ordine", {"p_idordine": order_id}).execute()
+
+    def get_all_details(self, limit: int = 1000) -> List[Dict[str, Any]]:
+        """Recupera tutti i dettagli ordini"""
+        response = self.db.table(DbTables.ORDER_DETAILS.value).select("*").limit(limit).execute()
+        return response.data if response.data else []
+
+    def get_sales_by_product(self) -> Dict[int, float]:
+        """Restituisce un dizionario {product_id: totale_vendite}"""
+        details = self.get_all_details()
+        
+        product_sales = {}
+        for detail in details:
+            product_id = detail.get(self.DatabaseColName.IDPRODOTTO.value)
+            subtotal = detail.get(self.DatabaseColName.SUBTOTALE.value, 0)
+            
+            if product_id:
+                product_sales[product_id] = product_sales.get(product_id, 0) + subtotal
+        
+        return product_sales

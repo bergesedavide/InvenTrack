@@ -19,8 +19,6 @@ const ProductsTable = ({ products = [], showFilters = true, onRefresh }) => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [updating, setUpdating] = useState(false);
 
-  const getToken = () => localStorage.getItem('access_token');
-
   // Categorie uniche (solo se products esiste)
   const categories = products.length > 0 ? ["ALL", ...new Set(products.map(p => p.category))] : ["ALL"];
 

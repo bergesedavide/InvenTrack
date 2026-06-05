@@ -141,3 +141,55 @@ class OrderRepository:
             "delivered": delivered,
             "cancelled": cancelled
         }
+
+    def get_sales_by_month(self, year: int = None, company_id: int = None) -> List[Dict[str, Any]]:
+        """
+        Restituisce vendite aggregate per mese tramite GROUP BY SQL
+        """
+        # Mappe mesi
+        months_map = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
+        
+        # Query con Supabase RPC (funzione SQL personalizzata) o GROUP BY
+        # Supabase non supporta GROUP BY diretto, quindi usiamo RPC
+        
+        # Opzione 1: Se hai una funzione SQL nel database
+        try:
+            response = self.db.rpc(
+                "get_sales_by_month",
+                {"p_year": year, "p_company_id": company_id}
+            ).execute()
+            if response.data:
+                return response.data
+        except:
+            pass
+        
+        # Opzione 2: Fallback con GROUP BY via Python (ma mantenendo la logica)
+        query = self.db.table(DbTables.ORDERS.value).select("data", "totale")
+        
+        if company_id:
+            query = query.eq("idAzienda", company_id)
+        
+        response = query.execute()
+        orders = response.data
+        
+        # Inizializza tutti i mesi con 0
+        monthly_sales = {month: 0 for month in months_map}
+        
+        for order in orders:
+            order_date = order.get("data")
+            if order_date:
+                # Estrai mese (supporta dd-mm-yyyy)
+                if '-' in order_date:
+                    parts = order_date.split('-')
+                    if len(parts[0]) == 4:  # yyyy-mm-dd
+                        month_num = int(parts[1])
+                    else:  # dd-mm-yyyy
+                        month_num = int(parts[1])
+                else:
+                    continue
+                
+                month_name = months_map[month_num - 1]
+                monthly_sales[month_name] += order.get("totale", 0)
+        
+        # Restituisce tutti i mesi (anche quelli con 0)
+        return [{"month": m, "sales": monthly_sales[m]} for m in months_map]
